@@ -1,2 +1,4 @@
-package library;public class Reader {
+package library;
+
+public class Reader {
 }
