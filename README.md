@@ -9,7 +9,7 @@
 
 С помощью набора команды
 
-    git pull & git add . & git commit -m "message"
+    git pull && git add . && git commit -m "message"
 
 вы можете делать свои изменения
 (после того, как вы закончили выполнение ДЗ).
