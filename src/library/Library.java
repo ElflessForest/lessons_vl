@@ -6,8 +6,9 @@ public class Library {
     private Book[] books;
 
     public Library(Book[] books) {
+        this.books = new Book[books.length];
         for (int i = 0; i < books.length; i++) {
-            books[i] = ;
+            this.books[i] = books[i];
         }
     }
 
