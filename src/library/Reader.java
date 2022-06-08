@@ -7,11 +7,13 @@ public class Reader {
     private ArrayList<Book> books;
 
     public Reader() {
-
+        books = new ArrayList<>();
     }
 
     public void takeBook(Library library, Book book) {
-        this.books.add(library.getBook(null));
+        if (library.getBook(book) != null) {
+            this.books.add(library.getBook(book));
+        }
     }
 
     public void returnBook(Library library, Book book) {
@@ -21,6 +23,5 @@ public class Reader {
                 break;
             }
         }
-
     }
 }
