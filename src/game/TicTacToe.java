@@ -2,6 +2,10 @@ package game;
 
 public class TicTacToe {
 
+
+    private static char turn;
+
+
     public static void main(String[] args) {
         String[][] board = getEmptyBoard();
 
@@ -34,6 +38,11 @@ public class TicTacToe {
         }
     }
 
-
-
+    private static void changePlayer() {
+        if (turn == 'X') {
+            turn = 'O';
+        } else {
+            turn = 'X';
+        }
+    }
 }
