@@ -1,12 +1,14 @@
 package game;
 
+import java.util.Scanner;
+
 public class TicTacToe {
 
 
-    private static char turn;
-
+    private static String turn;
 
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
         String[][] board = getEmptyBoard();
 
         String startMove = "X";
@@ -39,10 +41,24 @@ public class TicTacToe {
     }
 
     private static void changePlayer() {
-        if (turn == 'X') {
-            turn = 'O';
+        if (turn.equals("X")) {
+            turn = "O";
         } else {
-            turn = 'X';
+            turn = "X";
         }
+    }
+    public static void gameplay(String[][] board, Scanner scan) {
+        int x = scan.nextInt();
+        int y = scan.nextInt();
+        if (x > 3 || y > 3 || board[x][y].equals("X") || board[x][y].equals("O")) {
+            System.out.println("You can not put a mark here, try again");
+            x = scan.nextInt();
+            y = scan.nextInt();
+        } else {
+            board[x][y] = turn;
+        }
+
+        changePlayer();
+        printBoard(board);
     }
 }
