@@ -22,6 +22,10 @@ public class SetInt {
         return null;
     }
 
+    public boolean contains(int x) {
+        return false;
+    }
+
     public String toString() {
         return "";
     }
