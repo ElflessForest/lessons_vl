@@ -1,29 +1,97 @@
 package SetInt;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class SetInt {
 
-    public SetInt(int[] elements)  {
+    private static Scanner scan = new Scanner(System.in);
+    private ArrayList<Integer> array = new ArrayList<>();
 
+    public SetInt(int[] elements)  {
+        for (int i = 0; i < elements.length; i++) {
+            array.add(elements[i]);
+        }
     }
 
     public SetInt union(SetInt b) {
-        return null;
+        int[] union = new int[array.size() + b.array.size()];
+        for (int i = 0; i < array.size(); i++) {
+            union[i] = array.get(i);
+        }
+        int bIndex = 0;
+        for (int i = array.size(); i < union.length; i++) {
+            union[i] = b.array.get(bIndex);
+            bIndex++;
+        }
+        return new SetInt(union);
+    }
+
+
+    private boolean includes(int x, ArrayList<Integer> array) {
+        for (int i = 0; i < array.size(); i++) {
+            if (x == array.get(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int[] toArray(ArrayList<Integer> arrayList) {
+        int[] array = new int[arrayList.size()];
+        for (int i = 0; i < arrayList.size(); i++) {
+            array[i] = arrayList.get(i);
+        }
+        return array;
     }
 
     public SetInt intersection(SetInt b) {
-        return null;
+        ArrayList<Integer> intersection = new ArrayList<>();
+        for (int i = 0; i < array.size(); i++) {
+            if (includes(array.get(i), b.array)) {
+                intersection.add(array.get(i));
+            }
+        }
+        return new SetInt(toArray(intersection));
     }
 
     public SetInt difference(SetInt b) {
-        return null;
+        ArrayList<Integer> difference = new ArrayList<>();
+        for (int i = 0; i < array.size(); i++) {
+            if (!includes(array.get(i), b.array)) {
+                difference.add(array.get(i));
+            }
+        }
+        return new SetInt(toArray(difference));
     }
 
     public SetInt symmetricDifference(SetInt b) {
-        return null;
+        ArrayList<Integer> symmetricDifference = new ArrayList<>();
+        for (int i = 0; i < array.size(); i++) {
+            if (!includes(array.get(i), b.array)) {
+                symmetricDifference.add(array.get(i));
+            }
+        }
+        for (int i = 0; i < b.array.size(); i++) {
+            if (!includes(b.array.get(i), array)) {
+                symmetricDifference.add(b.array.get(i));
+            }
+        }
+        return new SetInt(toArray(symmetricDifference));
     }
 
     public String toString() {
-        return "";
+        String a = "{";
+        for (int i = 0; i < array.size(); i++) {
+            a += array.get(i);
+            if (array.size() - 1 != i) {
+                a += ", ";
+            } else {
+                a += "}";
+            }
+        }
+
+        return a;
     }
 
 
