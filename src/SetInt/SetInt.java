@@ -80,6 +80,10 @@ public class SetInt {
         return new SetInt(toArray(symmetricDifference));
     }
 
+    public boolean contains(int x) {
+        return false;
+    }
+
     public String toString() {
         String a = "{";
         for (int i = 0; i < array.size(); i++) {
