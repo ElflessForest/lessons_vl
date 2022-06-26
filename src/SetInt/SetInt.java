@@ -10,7 +10,15 @@ public class SetInt {
 
     public SetInt(int[] elements)  {
         for (int i = 0; i < elements.length; i++) {
-            array.add(elements[i]);
+            boolean contains = false;
+            for (int j = 0; j < elements.length; j++) {
+                if (elements[i] == elements[j]) {
+                    contains = true;
+                }
+            }
+            if (!contains) {
+                array.add(elements[i]);
+            }
         }
     }
 
