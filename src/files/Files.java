@@ -8,7 +8,7 @@ public class Files {
 
 
     public static void main(String[] args) throws IOException {
-        FileReader reader = new FileReader("input.txt");
+        FileReader reader = new FileReader("../input.txt");
 
         Scanner scan = new Scanner(reader);
 
