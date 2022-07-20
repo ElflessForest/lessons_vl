@@ -4,75 +4,94 @@ public class Tokenizer {
 
     private String source;
     private int index = 0;
-
+    private Token currentToken = Token.NONE;
+    private String currentTokenValue = null;
+    
     public Tokenizer(String source) {
         this.source = source;
     }
 
+    public String getTokenValue() {
+	return currentTokenValue;
+    }
+    
     // есть ли следующий токен
     public boolean hasNext() {
-        skipWhitespaces();
+
+	if (currentToken != Token.NONE) {
+	    return true;
+	}
+	
+	skipWhitespaces();
 
         if (index == source.length()) {
+	    currentToken = Token.NONE;
             return false;
         }
 
         char ch = source.charAt(index);
 
-        if (ch == '(' || ch == ')' || ch == '+' || ch == '-' || ch == '/' || ch == '*') {
-            return true;
-        }
+	if (ch == '(') {
+	    currentToken = Token.LEFT_PR;
+	    index++;
+	    return true;
+	}
 
-        String num = "";
+	if (ch == ')') {
+	    currentToken = Token.RIGHT_PR;
+	    index++;
+   	    return true;
+	}
 
-        int j = index;
+	if (ch == '+') {
+	    currentToken = Token.PLUS;
+	    index++;
+	    return true;
+	}
 
-        while (j != source.length() && '0' <= source.charAt(j) && source.charAt(j) <= '9') {
-            num += source.charAt(j);
-            j++;
+	if (ch == '-') {
+	    currentToken = Token.MINUS;
+	    index++;
+	    return true;
+	}
+
+	if (ch == '/') {
+	    currentToken = Token.DIV;
+	    index++;
+	    return true;
+	}
+
+	if (ch == '*') {
+	    currentToken = Token.MUL;
+	    index++;
+	    return true;
+	}
+	
+	String num = "";
+
+        while (index != source.length() && '0' <= source.charAt(index) && source.charAt(index) <= '9') {
+            num += source.charAt(index);
+            index++;
         }
 
         if (!num.equals("")) {
+	    currentTokenValue = num;
+	    currentToken = Token.NUMBER;
             return true;
         }
+	
+	currentToken = Token.NONE;
 
         return false;
     }
 
     // следующий токен
     public Token nextToken() {
-        if (hasNext()) {
-            char ch = source.charAt(index);
-            if (ch == '(') {
-                index++;
-                return Token.LEFT_PR;
-            }
-            if (ch == ')') {
-                index++;
-                return Token.RIGHT_PR;
-            }
-            if (ch == '+') {
-                index++;
-                return Token.PLUS;
-            }
-            if (ch == '-') {
-                index++;
-                return Token.MINUS;
-            }
-            if (ch == '*') {
-                index++;
-                return Token.MUL;
-            }
-            if (ch == '/') {
-                index++;
-                return Token.DIV;
-            }
-            while(index != source.length() && '0' <= source.charAt(index) && source.charAt(index) <= '9') {
-                index++;
-            }
-            return Token.NUMBER;
-        }
-        return Token.NONE;
+	hasNext();
+	Token token = currentToken;
+	currentToken = Token.NONE;
+
+	return token;
     }
 
     private void skipWhitespaces() {
@@ -80,12 +99,17 @@ public class Tokenizer {
             index++;
         }
     }
-
+    
     public static void main(String[] args) {
         String raw = "1 + 2 + 3 () + 2 - 1";
         Tokenizer tokenizer = new Tokenizer(raw);
         while (tokenizer.hasNext()) {
-            System.out.print(tokenizer.nextToken() + " ");
+	    Token token = tokenizer.nextToken();
+	    if (token == Token.NUMBER) {
+		System.out.print(token + "(" + tokenizer.getTokenValue() + ") ");
+	    } else {
+		System.out.print(token + " ");
+	    }
         }
     }
 
